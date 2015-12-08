@@ -15,7 +15,7 @@ func main() {
 
 	// regex for hex escapes
 	hexEscapeRegEx := regexp.MustCompile(`[\\][x][a-fA-F0-9]{2}`)
-	// regex for \" and \\
+	// regex for \" and \\ escapes
 	normalExcapeRegEx := regexp.MustCompile(`[\\][\\"]`)
 	// regex for " at begining and end of string. Not really needed, as there are always two per line.
 	quotesRegEx := regexp.MustCompile(`(^["]|["]$)`)
