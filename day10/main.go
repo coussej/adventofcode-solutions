@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strconv"
+	"strings"
 )
 
 func main() {
@@ -19,18 +20,21 @@ func main() {
 }
 
 func lookAndSay(s string) string {
-	var currSet, res string
+	var current, final string
+	var count int
 	for i, _ := range s {
 		switch {
-		case len(currSet) == 0:
-			currSet = string(s[i])
+		case count == 0:
+			current = string(s[i])
+			count++
 		case i > 0 && s[i] == s[i-1]:
-			currSet = currSet + string(s[i])
+			count++
 		default:
-			res = res + strconv.Itoa(len(currSet)) + string(currSet[0])
-			currSet = string(s[i])
+			final = strings.Join([]string{final, strconv.Itoa(count), current}, "")
+			current = string(s[i])
+			count = 1
 		}
 	}
-	res = res + strconv.Itoa(len(currSet)) + string(currSet[0])
-	return res
+	final = strings.Join([]string{final, strconv.Itoa(count), current}, "")
+	return final
 }
