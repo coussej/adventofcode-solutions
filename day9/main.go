@@ -43,14 +43,15 @@ func (r routemap) addRoute(from, to string, distance int) {
 func (r routemap) findShortestRemainingPath(currentPath []string) (int, []string) {
 	var shortestPath []string
 	var distance int
+
 	for place, dist := range r[currentPath[len(currentPath)-1]] {
+		// if the place is not yet in the path, add it and recurse.
 		if !sliceContains(currentPath, place) {
-			//fmt.Println("Visiting", append(currentPath, place))
-			d, path := r.findShortestRemainingPath(append(currentPath, place))
+			d, p := r.findShortestRemainingPath(append(currentPath, place))
 			if distance == 0 || d+dist < distance {
 				distance = d + dist
-				shortestPath = make([]string, len(path))
-				copy(shortestPath, path)
+				shortestPath = make([]string, len(p))
+				copy(shortestPath, p)
 			}
 		}
 	}
@@ -65,13 +66,13 @@ func (r routemap) findLongestRemainingPath(currentPath []string) (int, []string)
 	var longestPath []string
 	var distance int
 	for place, dist := range r[currentPath[len(currentPath)-1]] {
+		// if the place is not yet in the path, add it and recurse.
 		if !sliceContains(currentPath, place) {
-			//fmt.Println("Visiting", append(currentPath, place))
-			d, path := r.findLongestRemainingPath(append(currentPath, place))
+			d, p := r.findLongestRemainingPath(append(currentPath, place))
 			if distance == 0 || d+dist > distance {
 				distance = d + dist
-				longestPath = make([]string, len(path))
-				copy(longestPath, path)
+				longestPath = make([]string, len(p))
+				copy(longestPath, p)
 			}
 		}
 	}
