@@ -1,9 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"strconv"
-	"strings"
 )
 
 func main() {
@@ -20,7 +20,8 @@ func main() {
 }
 
 func lookAndSay(s string) string {
-	var current, final string
+	var current string
+	var final bytes.Buffer
 	var count int
 	for i, _ := range s {
 		switch {
@@ -30,11 +31,13 @@ func lookAndSay(s string) string {
 		case i > 0 && s[i] == s[i-1]:
 			count++
 		default:
-			final = strings.Join([]string{final, strconv.Itoa(count), current}, "")
+			final.WriteString(strconv.Itoa(count))
+			final.WriteString(current)
 			current = string(s[i])
 			count = 1
 		}
 	}
-	final = strings.Join([]string{final, strconv.Itoa(count), current}, "")
-	return final
+	final.WriteString(strconv.Itoa(count))
+	final.WriteString(current)
+	return final.String()
 }
