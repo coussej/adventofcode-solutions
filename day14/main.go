@@ -52,20 +52,20 @@ func getHerd() Herd {
 
 func (h *Herd) Race(seconds int) {
 	for i := 0; i < seconds; i++ {
-		for i, _ := range *h {
-			if (*h)[i].Cycletime >= 0 {
-				(*h)[i].DistanceTraveled += (*h)[i].Speed
+		for n, _ := range *h {
+			if (*h)[n].Cycletime >= 0 {
+				(*h)[n].DistanceTraveled += (*h)[n].Speed
 			}
-			(*h)[i].Cycletime++
-			if (*h)[i].Cycletime == (*h)[i].ActivityDuration {
-				(*h)[i].Cycletime = -(*h)[i].PauseDuration
+			(*h)[n].Cycletime++
+			if (*h)[n].Cycletime == (*h)[n].ActivityDuration {
+				(*h)[n].Cycletime = -(*h)[n].PauseDuration
 			}
 		}
 		// part 2: give points when in lead.
 		max := h.getMaxDistance()
-		for i, _ := range *h {
-			if (*h)[i].DistanceTraveled == max {
-				(*h)[i].TimesInLead++
+		for n, _ := range *h {
+			if (*h)[n].DistanceTraveled == max {
+				(*h)[n].TimesInLead++
 			}
 		}
 	}
