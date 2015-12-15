@@ -21,7 +21,7 @@ func main() {
 
 	var maxScore int
 	var maxScoreInclCal int
-	for _, c := range getPossibleCombos(4, 100) {
+	for _, c := range getPossibleCombos(len(ing), 100) {
 		s := getCookieScore(ing, c, 0)
 		if s > maxScore {
 			maxScore = s
