@@ -13,24 +13,23 @@ type item struct {
 }
 
 func main() {
-
 	p := player{100, 0, 0, []item{}}
 	boss := player{103, 9, 2, []item{}}
 
-	mincostWin := 0
-	maxCostLose := 0
+	minCostWin := 0
+	maxCostLoss := 0
 
 	for _, pl := range p.getAllPossiblePlayers() {
 		win := pl.fight(boss)
-		if win && (pl.totalCost() < mincostWin || mincostWin == 0) {
-			mincostWin = pl.totalCost()
+		if win && (pl.totalCost() < minCostWin || minCostWin == 0) {
+			minCostWin = pl.totalCost()
 		}
-		if !win && pl.totalCost() > maxCostLose {
-			maxCostLose = pl.totalCost()
+		if !win && pl.totalCost() > maxCostLoss {
+			maxCostLoss = pl.totalCost()
 		}
 	}
-	fmt.Println(mincostWin)
-	fmt.Println(maxCostLose)
+	fmt.Println("You can win while paying only", minCostWin, "...")
+	fmt.Println("... but you can still lose when paying", maxCostLoss, "!")
 }
 
 func (p1 player) fight(p2 player) (wins bool) {
