@@ -21,8 +21,8 @@ func main() {
 
 	a, b = runInstructions(1, 0, instr)
 	fmt.Println("Result of program with (a0,b0) = (1,0): a =", a, "| b =", b)
-
 }
+
 func runInstructions(a0, b0 int, instr []instruction) (a, b int) {
 	a = a0
 	b = b0
