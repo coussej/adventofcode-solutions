@@ -39,5 +39,4 @@ func main() {
 		getDecompressedLength(data, false))
 	fmt.Printf("Using version 2, the decompressed length of the file is %v.\n",
 		getDecompressedLength(data, true))
-
 }
