@@ -31,17 +31,6 @@ func (bl botlist) assign(botID, val int) {
 	bl[botID] = b
 }
 
-type valueInstruction struct {
-	botID, value int
-}
-
-type giveInstruction struct {
-	botID         int
-	valueType     string
-	recipientID   int
-	recipientType string
-}
-
 func getInstructions() []string {
 	in, _ := ioutil.ReadFile("input.txt")
 	in2 := strings.TrimSpace(regexp.MustCompile("\n *").ReplaceAllString(string(in), ";"))
