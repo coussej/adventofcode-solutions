@@ -23,6 +23,10 @@ func (b *bot) assign(val int) {
 	}
 }
 
+func (b *bot) isReadyToGive() bool {
+	return b.high > 0
+}
+
 type botlist map[int]bot
 
 func (bl botlist) assign(botID, val int) {
@@ -31,49 +35,70 @@ func (bl botlist) assign(botID, val int) {
 	bl[botID] = b
 }
 
-func getInstructions() []string {
+type valueInstruction struct {
+	botID int
+	value int
+}
+
+type targetInstruction struct {
+	botID         int
+	valueType     string
+	recipientID   int
+	recipientType string
+}
+
+func getInstructions() (vInstr []valueInstruction, tInstr []targetInstruction) {
 	in, _ := ioutil.ReadFile("input.txt")
 	in2 := strings.TrimSpace(regexp.MustCompile("\n *").ReplaceAllString(string(in), ";"))
-	return strings.Split(in2, ";")
+	for _, instr := range strings.Split(in2, ";") {
+		words := strings.Split(instr, " ")
+		switch words[0] {
+		case "value":
+			val, _ := strconv.Atoi(words[1])
+			id, _ := strconv.Atoi(words[5])
+			vInstr = append(vInstr, valueInstruction{id, val})
+		case "bot":
+			id, _ := strconv.Atoi(words[1])
+			lowid, _ := strconv.Atoi(words[6])
+			highid, _ := strconv.Atoi(words[11])
+			tInstr = append(tInstr, targetInstruction{id, "low", lowid, words[5]})
+			tInstr = append(tInstr, targetInstruction{id, "high", highid, words[10]})
+		}
+	}
+	return
 }
 
 func main() {
 	bots := botlist{}
 	outputs := map[int]int{}
 
-	instructionFailed := true
+	vInstr, tInstr := getInstructions()
 
-	for instructionFailed {
-		instructionFailed = false
-		for _, instr := range getInstructions() {
-			words := strings.Split(instr, " ")
-			switch words[0] {
-			case "value":
-				val, _ := strconv.Atoi(words[1])
-				id, _ := strconv.Atoi(words[5])
-				bots.assign(id, val)
-			case "bot":
-				id, _ := strconv.Atoi(words[1])
-				bot := bots[id]
-				if bot.high > 0 {
-					//assign low
-					lowid, _ := strconv.Atoi(words[6])
-					switch words[5] {
-					case "output":
-						outputs[lowid] = bot.low
-					default:
-						bots.assign(lowid, bot.low)
-					}
-					highid, _ := strconv.Atoi(words[11])
-					switch words[10] {
-					case "output":
-						outputs[highid] = bot.high
-					default:
-						bots.assign(highid, bot.high)
-					}
-				} else {
-					instructionFailed = true
-				}
+	// assign values from input bins
+	for _, v := range vInstr {
+		bots.assign(v.botID, v.value)
+	}
+
+	// execute target instructions until every instruction succeeds
+	allInstructionsOK := false
+	for !allInstructionsOK {
+		allInstructionsOK = true
+		for _, t := range tInstr {
+			bot := bots[t.botID]
+			if !bot.isReadyToGive() {
+				allInstructionsOK = false
+				continue
+			}
+			var val = 0
+			if t.valueType == "low" {
+				val = bot.low
+			} else {
+				val = bot.high
+			}
+			if t.recipientType == "bot" {
+				bots.assign(t.recipientID, val)
+			} else {
+				outputs[t.recipientID] = val
 			}
 		}
 	}
