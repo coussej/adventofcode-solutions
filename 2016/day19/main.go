@@ -15,7 +15,7 @@ func main() {
 
 	// part2: result in function of the nearest lower 3^f
 	f3 := 1
-	for f3*3 <= in {
+	for f3*3 < in {
 		f3 *= 3
 	}
 	winningElf = (in/(f3*3)+(in/f3)-1)*f3 + (in/f3)*(in%f3)
