@@ -85,10 +85,11 @@ func (r registry) runInstructions(instr []string) {
 }
 
 func main() {
-	instr := getInstructions()
+	r := registry{"a": 7}
+	r.runInstructions(getInstructions())
+	fmt.Printf("A value of %v should be sent to the safe.\n", r["a"])
 
-	r := registry{"a": 12}
-	r.runInstructions(instr)
-	fmt.Printf("The program results in a value of %v in registry a.\n", r["a"])
-
+	r = registry{"a": 12}
+	r.runInstructions(getInstructions())
+	fmt.Printf("Actually, a value of %v should be sent to the safe.\n", r["a"])
 }
