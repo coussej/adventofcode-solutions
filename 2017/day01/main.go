@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"strconv"
+	"strings"
 )
 
 func main() {
@@ -26,7 +27,7 @@ func main() {
 
 func getList() (list []int) {
 	in, _ := ioutil.ReadFile("input.txt")
-	for _, c := range string(in) {
+	for _, c := range strings.Replace(string(in), "\n", "", -1) {
 		num, _ := strconv.Atoi(string(c))
 		list = append(list, num)
 	}
