@@ -7,8 +7,8 @@ import (
 func main() {
 	input := 312051
 
-	fmt.Printf("%v steps are required to carry the data from the input square to the access port.", getStepsToCenter(input))
-	fmt.Printf("The first value written that is larger than the input is %v.", getFirstValueAbove(input))
+	fmt.Printf("%v steps are required to carry the data from the input square to the access port.\n", getStepsToCenter(input))
+	fmt.Printf("The first value written that is larger than the input is %v.\n", getFirstValueAbove(input))
 }
 
 func getStepsToCenter(pos int) int {
@@ -34,7 +34,6 @@ func getFirstValueAbove(limit int) (value int) {
 	memory[curLoc] = 1
 
 	for value < limit {
-		fmt.Println(curLoc)
 		switch {
 		case curLoc == (loc{rotation, -rotation}):
 			curLoc = curLoc.right()
