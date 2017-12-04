@@ -7,8 +7,8 @@ import (
 func main() {
 	input := 312051
 
-	//fmt.Println(getStepsToCenter(input))
-	fmt.Println(getFirstValueAbove(input))
+	fmt.Printf("%v steps are required to carry the data from the input square to the access port.", getStepsToCenter(input))
+	fmt.Printf("The first value written that is larger than the input is %v.", getFirstValueAbove(input))
 }
 
 func getStepsToCenter(pos int) int {
