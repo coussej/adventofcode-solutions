@@ -1,41 +1,56 @@
-## Day 1: Inverse Captcha
+## Day 1: Chronal Calibration
+"We've detected some temporal anomalies," one of Santa's Elves at the Temporal Anomaly Research and Detection Instrument Station tells you. She sounded pretty worried when she called you down here. "At 500-year intervals into the past, someone has been changing Santa's history!"
 
-The night before Christmas, one of Santa's Elves calls you in a panic. "The printer's broken! We can't print the Naughty or Nice List!" By the time you make it to sub-basement 17, there are only a few minutes until midnight. "We have a big problem," she says; "there must be almost fifty bugs in this system, but nothing else can print The List. Stand in this square, quick! There's no time to explain; if you can convince them to pay you in stars, you'll be able to--" She pulls a lever and the world goes blurry.
+"The good news is that the changes won't propagate to our time stream for another 25 days, and we have a device" - she attaches something to your wrist - "that will let you fix the changes with no such propagation delay. It's configured to send you 500 years further into the past every few days; that was the best we could do on such short notice."
 
-When your eyes can focus again, everything seems a lot more pixelated than before. She must have sent you inside the computer! You check the system clock: 25 milliseconds until midnight. With that much time, you should be able to collect all fifty stars by December 25th.
+"The bad news is that we are detecting roughly fifty anomalies throughout time; the device will indicate fixed anomalies with stars. The other bad news is that we only have one device and you're the best person for the job! Good lu--" She taps a button on the device and you suddenly feel like you're falling. To save Christmas, you need to get all fifty stars by December 25th.
 
-Collect stars by solving puzzles. Two puzzles will be made available on each day millisecond in the advent calendar; the second puzzle is unlocked when you complete the first. Each puzzle grants one star. Good luck!
+Collect stars by solving puzzles. Two puzzles will be made available on each day in the advent calendar; the second puzzle is unlocked when you complete the first. Each puzzle grants one star. Good luck!
 
-You're standing in a room with "digitization quarantine" written in LEDs along one wall. The only door is locked, but it includes a small interface. "Restricted Area - Strictly No Digitized Users Allowed."
+After feeling like you've been falling for a few minutes, you look at the device's tiny screen. "Error: Device must be calibrated before first use. Frequency drift detected. Cannot maintain destination lock." Below the message, the device shows a sequence of changes in frequency (your puzzle input). A value like +6 means the current frequency increases by 6; a value like -3 means the current frequency decreases by 3.
 
-It goes on to explain that you may only leave by solving a captcha to prove you're not a human. Apparently, you only get one millisecond to solve the captcha: too fast for a normal human, but it feels like hours to you.
+For example, if the device displays frequency changes of +1, -2, +3, +1, then starting from a frequency of zero, the following changes would occur:
 
-The captcha requires you to review a sequence of digits (your puzzle input) and find the sum of all digits that match the next digit in the list. The list is circular, so the digit after the last digit is the first digit in the list.
+* Current frequency  0, change of +1; resulting frequency  1.
+* Current frequency  1, change of -2; resulting frequency -1.
+* Current frequency -1, change of +3; resulting frequency  2.
+* Current frequency  2, change of +1; resulting frequency  3.
 
-For example:
+In this example, the resulting frequency is 3.
 
-* 1122 produces a sum of 3 (1 + 2) because the first digit (1) matches the second digit and the third digit (2) matches the fourth digit.
-* 1111 produces 4 because each digit (all 1) matches the next.
-* 1234 produces 0 because no digit matches the next.
-* 91212129 produces 9 because the only digit that matches the next one is the last digit, 9.
-What is the solution to your captcha?
+Here are other example situations:
 
-Your puzzle answer was 1049.
++1, +1, +1 results in  3
++1, +1, -2 results in  0
+-1, -2, -3 results in -6
+Starting with a frequency of zero, what is the resulting frequency after all of the changes in frequency have been applied?
+
+Your puzzle answer was 425.
 
 #### Part Two
+You notice that the device repeats the same frequency change list over and over. To calibrate the device, you need to find the first frequency it reaches twice.
 
-You notice a progress bar that jumps to 50% completion. Apparently, the door isn't yet satisfied, but it did emit a star as encouragement. The instructions change:
+For example, using the same list of changes above, the device would loop as follows:
 
-Now, instead of considering the next digit, it wants you to consider the digit halfway around the circular list. That is, if your list contains 10 items, only include a digit in your sum if the digit 10/2 = 5 steps forward matches it. Fortunately, your list has an even number of elements.
+* Current frequency  0, change of +1; resulting frequency  1.
+* Current frequency  1, change of -2; resulting frequency -1.
+* Current frequency -1, change of +3; resulting frequency  2.
+* Current frequency  2, change of +1; resulting frequency  3.
 
-For example:
+(At this point, the device continues from the start of the list.)
 
-* 1212 produces 6: the list contains 4 items, and all four digits match the digit 2 items ahead.
-* 1221 produces 0, because every comparison is between a 1 and a 2.
-* 123425 produces 4, because both 2s match each other, but no other digit has a match.
-* 123123 produces 12.
-* 12131415 produces 4.
+* Current frequency  3, change of +1; resulting frequency  4.
+* Current frequency  4, change of -2; resulting frequency  2, which has already been seen.
 
-What is the solution to your new captcha?
+In this example, the first frequency reached twice is 2. Note that your device might need to repeat its list of frequency changes many times before a duplicate frequency is found, and that duplicates might be found while in the middle of processing the list.
 
-Your puzzle answer was 1508.
+Here are other examples:
+
+* +1, -1 first reaches 0 twice.
+* +3, +3, +4, -2, -4 first reaches 10 twice.
+* -6, +3, +8, +5, -6 first reaches 5 twice.
+* +7, +7, -2, -7, -4 first reaches 14 twice.
+
+What is the first frequency your device reaches twice?
+
+Your puzzle answer was 57538.
